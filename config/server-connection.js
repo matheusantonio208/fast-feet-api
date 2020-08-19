@@ -6,7 +6,9 @@ class Server {
   }
 
   start(port) {
-    server.listen(port);
+    server.listen(port, () => {
+      console.log('Server is running...');
+    });
   }
 }
 
