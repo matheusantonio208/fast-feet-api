@@ -1,19 +1,19 @@
 import Recipient from '../../models/Recipient';
 
 class RecipientRepository extends Error {
-  async listRecipients() {
+  async list() {
     const recipients = await Recipient.findAll();
     return recipients;
   }
 
-  async createRecipient(recipientData) {
+  async create(recipientData) {
     if (await Recipient.create(recipientData)) {
       return { message: 'Recipient created successfully' };
     }
     throw new Error('Could not save recipient');
   }
 
-  async listOneRecipient(id) {
+  async listOne(id) {
     const recipient = await Recipient.findByPk(id);
 
     if (recipient) {
@@ -23,7 +23,7 @@ class RecipientRepository extends Error {
     throw new Error(`There is no saved recipient with id ${id}`);
   }
 
-  async updateRecipient(id, recipientData) {
+  async update(id, recipientData) {
     const recipient = await Recipient.findByPk(id);
 
     if (await recipient.update(recipientData)) {
@@ -33,7 +33,7 @@ class RecipientRepository extends Error {
     throw new Error('Could not updated recipient');
   }
 
-  async deleteRecipient(id) {
+  async delete(id) {
     if (await Recipient.destroy({ where: { id } })) {
       return { message: `Recipient ${id} deleted successfully` };
     }

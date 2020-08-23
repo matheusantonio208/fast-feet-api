@@ -2,15 +2,25 @@ import Sequelize from 'sequelize';
 
 import databaseConfig from './database-config';
 
-import Recipients from '../../src/models/Recipient';
-import Users from '../../src/models/User';
+import Recipient from '../../src/models/Recipient';
+import User from '../../src/models/User';
+import File from '../../src/models/File';
+import Deliveryman from '../../src/models/Deliveryman';
+import Order from '../../src/models/Order';
 
+const models = [Recipient, User, File, Deliveryman, Order];
 class DatabaseConnection {
   constructor() {
-    const models = [Recipients, Users];
-    const connection = new Sequelize(databaseConfig);
+    this.init();
+  }
 
-    models.map((model) => model.init(connection));
+  init() {
+    this.connection = new Sequelize(databaseConfig);
+
+    models.map(
+      (model) => model.init(this.connection),
+      (model) => model.associate && model.associate(this.connection.models),
+    );
   }
 }
 

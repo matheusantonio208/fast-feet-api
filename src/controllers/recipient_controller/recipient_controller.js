@@ -1,9 +1,10 @@
-import RecipientRepository from './recipient_repository';
+import Recipient from './recipient_repository';
 
 class RecipientController {
   async index(req, res) {
     try {
-      const recipients = await RecipientRepository.listRecipients();
+      const recipients = await Recipient.list();
+
       return res.json(recipients);
     } catch (error) {
       return res.status(400).send(`${error}`);
@@ -12,9 +13,8 @@ class RecipientController {
 
   async show(req, res) {
     try {
-      const recipient = await RecipientRepository.listOneRecipient(
-        req.params.id,
-      );
+      const recipient = await Recipient.listOne(req.params.id);
+
       return res.json(recipient);
     } catch (error) {
       return res.status(400).send(`${error}`);
@@ -24,7 +24,7 @@ class RecipientController {
   async store(req, res) {
     try {
       const { name, street, number, complement, state, city, cep } = req.body;
-      const newRecipient = await RecipientRepository.createRecipient({
+      const newRecipient = await Recipient.create({
         name,
         street,
         number,
@@ -43,10 +43,16 @@ class RecipientController {
   async update(req, res) {
     try {
       const { name, street, number, complement, state, city, cep } = req.body;
-      const updatedRecipient = await RecipientRepository.updateRecipient(
-        req.params.id,
-        { name, street, number, complement, state, city, cep },
-      );
+      const updatedRecipient = await Recipient.update(req.params.id, {
+        name,
+        street,
+        number,
+        complement,
+        state,
+        city,
+        cep,
+      });
+
       return res.json(updatedRecipient);
     } catch (error) {
       return res.status(400).send(`${error}`);
@@ -55,9 +61,7 @@ class RecipientController {
 
   async delete(req, res) {
     try {
-      const deletedRecipient = await RecipientRepository.deleteRecipient(
-        req.params.id,
-      );
+      const deletedRecipient = await Recipient.delete(req.params.id);
 
       return res.json(deletedRecipient);
     } catch (error) {
