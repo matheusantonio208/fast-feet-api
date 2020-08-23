@@ -1,7 +1,7 @@
 import Sequelize, { Model } from 'sequelize';
 
 class File extends Model {
-  static init(sequelize) {
+  static init(connection) {
     super.init(
       {
         name: Sequelize.STRING,
@@ -9,11 +9,11 @@ class File extends Model {
         url: {
           type: Sequelize.VIRTUAL,
           get() {
-            return `http://localhost:3333/files/${this.path}`;
+            return `http://localhost:4444/files/${this.path}`;
           },
         },
       },
-      { sequelize },
+      { sequelize: connection },
     );
 
     return this;

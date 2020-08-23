@@ -1,7 +1,7 @@
 import express from 'express';
 import routes from '../src/controllers/routes';
 
-import './database/database-connection';
+import './postgresDB/database-connection';
 
 class App {
   constructor() {

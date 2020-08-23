@@ -1,7 +1,7 @@
 import Sequelize, { Model } from 'sequelize';
 
 class Order extends Model {
-  static init(sequelize) {
+  static init(connection) {
     super.init(
       {
         product: Sequelize.STRING,
@@ -12,7 +12,7 @@ class Order extends Model {
         end_date: Sequelize.DATE,
         canceled_at: Sequelize.DATE,
       },
-      { sequelize },
+      { sequelize: connection },
     );
   }
 

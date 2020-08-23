@@ -3,21 +3,21 @@ import Recipient from './recipient_repository';
 class RecipientController {
   async index(req, res) {
     try {
-      const recipients = await Recipient.list();
+      const allRecipients = await Recipient.listAll();
 
-      return res.json(recipients);
+      return res.json(allRecipients);
     } catch (error) {
-      return res.status(400).send(`${error}`);
+      return res.status(400).json({ error_msg: error.toString() });
     }
   }
 
   async show(req, res) {
     try {
-      const recipient = await Recipient.listOne(req.params.id);
+      const oneRecipient = await Recipient.listOne(req.params.id);
 
-      return res.json(recipient);
+      return res.json(oneRecipient);
     } catch (error) {
-      return res.status(400).send(`${error}`);
+      return res.status(400).json({ error_msg: error.toString() });
     }
   }
 
@@ -36,7 +36,7 @@ class RecipientController {
 
       return res.json(newRecipient);
     } catch (error) {
-      return res.status(400).send(`${error}`);
+      return res.status(400).json({ error_msg: error.toString() });
     }
   }
 
@@ -55,7 +55,7 @@ class RecipientController {
 
       return res.json(updatedRecipient);
     } catch (error) {
-      return res.status(400).send(`${error}`);
+      return res.status(400).json({ error_msg: error.toString() });
     }
   }
 
@@ -65,7 +65,7 @@ class RecipientController {
 
       return res.json(deletedRecipient);
     } catch (error) {
-      return res.status(400).send(`${error}`);
+      return res.status(400).json({ error_msg: error.toString() });
     }
   }
 }

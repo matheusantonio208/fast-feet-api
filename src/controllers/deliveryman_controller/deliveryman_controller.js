@@ -7,16 +7,17 @@ class DeliverymanController {
 
       return res.json(deliveryman);
     } catch (error) {
-      return res.status(400).json({ error_msg: error });
+      return res.status(400).json({ error_msg: error.toString() });
     }
   }
 
   async show(req, res) {
     try {
       const deliveryman = await Deliveryman.listOne(req.params.id);
+
       return res.json(deliveryman);
     } catch (error) {
-      return res.status(400).json({ error_msg: error });
+      return res.status(400).json({ error_msg: error.toString() });
     }
   }
 
@@ -26,16 +27,17 @@ class DeliverymanController {
 
       return res.json(deliveryman);
     } catch (error) {
-      return res.status(400).json({ error_msg: error });
+      return res.status(400).json({ error_msg: error.toString() });
     }
   }
 
   async delete(req, res) {
     try {
       const deliveryman = await Deliveryman.delete(req.params.id);
+
       return res.json(deliveryman);
     } catch (error) {
-      return res.status(400).json({ error_msg: error });
+      return res.status(400).json({ error_msg: error.toString() });
     }
   }
 
@@ -45,7 +47,7 @@ class DeliverymanController {
 
       return res.json(deliveryman);
     } catch (error) {
-      return res.status(400).json({ error_msg: error });
+      return res.status(400).json({ error_msg: error.toString() });
     }
   }
 }

@@ -2,7 +2,7 @@ import { isBefore, isAfter, parseISO, startOfHour, setHours } from 'date-fns';
 import Order from '../../models/Order';
 
 class OrderRepository extends Error {
-  async list(id) {
+  async listAll(id) {
     const order = await Order.findByPk(id);
 
     return order;
@@ -19,7 +19,7 @@ class OrderRepository extends Error {
     throw new Error(`Could not save order ${order.product}`);
   }
 
-  async sendOrder(id, startDate, endDate) {
+  async toSend(id, startDate, endDate) {
     const order = await Order.findByPk(id);
 
     if (!this.checkHourToSend(startDate)) {

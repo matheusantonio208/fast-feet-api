@@ -1,13 +1,13 @@
 import { Router } from 'express';
 import multer from 'multer';
 
-import multerConfig from '../../config/multer';
+import multerConfig from '../services/multer-service';
 
-import FileController from './file_controller/file_controller';
-import SessionController from './session_controller/session_controller';
-import RecipientController from './recipient_controller/recipient_controller';
-import DeliverymanController from './deliveryman_controller/deliveryman_controller';
-import OrderController from './order_controller/Order_controller';
+import File from './file_controller/file_controller';
+import Session from './session_controller/session_controller';
+import Recipient from './recipient_controller/recipient_controller';
+import Deliveryman from './deliveryman_controller/deliveryman_controller';
+import Order from './order_controller/Order_controller';
 
 import authService from '../services/auth-service';
 
@@ -23,38 +23,38 @@ class Routes {
   }
 
   session(baseRote) {
-    this.routes.post(`${baseRote}`, SessionController.store);
+    this.routes.post(`${baseRote}`, Session.store);
   }
 
   recipient(baseRoute) {
-    this.routes.get(`${baseRoute}`, RecipientController.index);
-    this.routes.get(`${baseRoute}/:id`, RecipientController.show);
+    this.routes.get(`${baseRoute}`, Recipient.index);
+    this.routes.get(`${baseRoute}/:id`, Recipient.show);
 
     this.routes.use(authService);
-    this.routes.post(`${baseRoute}/create`, RecipientController.store);
-    this.routes.put(`${baseRoute}/update/:id`, RecipientController.update);
-    this.routes.delete(`${baseRoute}/delete/:id`, RecipientController.delete);
+    this.routes.post(`${baseRoute}/create`, Recipient.store);
+    this.routes.put(`${baseRoute}/update/:id`, Recipient.update);
+    this.routes.delete(`${baseRoute}/delete/:id`, Recipient.delete);
   }
 
   deliveryman(baseRote) {
     this.routes.post(
       `${baseRote}/files`,
       this.upload.single('file'),
-      FileController.store,
+      File.store,
     );
 
-    this.routes.post(`${baseRote}`, DeliverymanController.store);
-    this.routes.get(`${baseRote}`, DeliverymanController.index);
-    this.routes.get(`${baseRote}/:id`, DeliverymanController.show);
-    this.routes.put(`${baseRote}/:id`, DeliverymanController.update);
-    this.routes.delete(`${baseRote}/:id`, DeliverymanController.delete);
+    this.routes.post(`${baseRote}`, Deliveryman.store);
+    this.routes.get(`${baseRote}`, Deliveryman.index);
+    this.routes.get(`${baseRote}/:id`, Deliveryman.show);
+    this.routes.put(`${baseRote}/:id`, Deliveryman.update);
+    this.routes.delete(`${baseRote}/:id`, Deliveryman.delete);
   }
 
   order(baseRoute) {
-    this.routes.get(`${baseRoute}/:id`, OrderController.index);
-    this.routes.post(`${baseRoute}`, OrderController.store);
-    this.routes.put(`${baseRoute}/:id`, OrderController.update);
-    this.routes.delete(`${baseRoute}/:id`, OrderController.delete);
+    this.routes.get(`${baseRoute}/:id`, Order.index);
+    this.routes.post(`${baseRoute}`, Order.store);
+    this.routes.put(`${baseRoute}/:id`, Order.update);
+    this.routes.delete(`${baseRoute}/:id`, Order.delete);
   }
 }
 

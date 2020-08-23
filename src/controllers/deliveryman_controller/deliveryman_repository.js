@@ -19,6 +19,7 @@ class DeliverymanRepository extends Error {
 
   async listOne(id) {
     const deliveryman = await Deliveryman.findByPk(id);
+
     if (deliveryman) {
       return deliveryman;
     }
@@ -41,7 +42,7 @@ class DeliverymanRepository extends Error {
       return { success_msg: `Deliveryman ${id} deleted successfully` };
     }
 
-    throw new Error(`Could not deleted recipient`);
+    throw new Error(`Could not deleted deliveryman`);
   }
 }
 
