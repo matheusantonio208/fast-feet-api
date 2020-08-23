@@ -1,7 +1,9 @@
 import Order from './Order_repository';
 import Deliveryman from '../deliveryman_controller/deliveryman_repository';
 import Recipient from '../recipient_controller/recipient_repository';
-import Email from '../../services/mail-services';
+
+import Queue from '../../../lib/Queue';
+import NewOrderMail from '../../jobs/NewOrderMail';
 
 class OrderController {
   async index(req, res) {
@@ -21,24 +23,7 @@ class OrderController {
         const deliveryman = await Deliveryman.listOne(req.body.deliveryman_id);
         const recipient = await Recipient.listOne(req.body.recipient_id);
 
-        await Email.sendEmail({
-          to: `${deliveryman.email}`,
-          subject: `Nova encomenda ${order.name} para ser entregue`,
-          text: 'Você tem uma nova entrega para ser efetuada',
-          template: 'newOrder',
-          context: {
-            deliveryman: deliveryman.name,
-            order_id: order.id,
-            product: order.name,
-            recipient: recipient.name,
-            street: recipient.street,
-            number: recipient.number,
-            complement: recipient.complement,
-            state: recipient.state,
-            city: recipient.city,
-            cep: recipient.cep,
-          },
-        });
+        await Queue.add(NewOrderMail.key, { deliveryman, recipient, order });
       }
 
       return res.json(order);
