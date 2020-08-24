@@ -7,6 +7,7 @@ import File from './file_controller/file_controller';
 import Session from './session_controller/session_controller';
 import Recipient from './recipient_controller/recipient_controller';
 import Deliveryman from './deliveryman_controller/deliveryman_controller';
+import Delivery from './delivery_controller/delivery_controller';
 import Order from './order_controller/Order_controller';
 
 import authService from '../services/auth-service';
@@ -46,6 +47,8 @@ class Routes {
     this.routes.post(`${baseRote}`, Deliveryman.store);
     this.routes.get(`${baseRote}`, Deliveryman.index);
     this.routes.get(`${baseRote}/:id`, Deliveryman.show);
+    this.routes.get(`${baseRote}/:id/deliveries`, Delivery.index);
+    this.routes.get(`${baseRote}/:id/deliveries/status`, Delivery.show);
     this.routes.put(`${baseRote}/:id`, Deliveryman.update);
     this.routes.delete(`${baseRote}/:id`, Deliveryman.delete);
   }
@@ -53,8 +56,6 @@ class Routes {
   order(baseRoute) {
     this.routes.get(`${baseRoute}/:id`, Order.index);
     this.routes.post(`${baseRoute}`, Order.store);
-    this.routes.put(`${baseRoute}/:id`, Order.update);
-    this.routes.delete(`${baseRoute}/:id`, Order.delete);
   }
 }
 

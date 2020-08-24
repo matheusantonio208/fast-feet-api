@@ -32,32 +32,6 @@ class OrderController {
       return res.status(400).json({ error_msg: error.toString() });
     }
   }
-
-  async update(req, res) {
-    try {
-      const { start_date, end_date } = req.body;
-
-      const orderDispatched = await Order.toSend(
-        req.params.id,
-        start_date,
-        end_date,
-      );
-
-      return res.json(orderDispatched);
-    } catch (error) {
-      return res.status(400).json({ error_msg: error.toString() });
-    }
-  }
-
-  async delete(req, res) {
-    try {
-      const orderCanceled = await Order.toCancel(req.params.id);
-
-      return res.json(orderCanceled);
-    } catch (error) {
-      return res.status(400).json({ error_msg: error.toString() });
-    }
-  }
 }
 
 export default new OrderController();
