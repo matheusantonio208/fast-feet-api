@@ -1,18 +1,18 @@
 import Email from '../services/mail-services';
 
-class NewOrderMail {
+class CancelOrderMail {
   get key() {
-    return 'KeyUniqueJob';
+    return 'cancelOrderMail';
   }
 
   async handle({ data }) {
-    const { deliveryman, order, recipient } = data;
+    const { deliveryman, order, deliveryProblem, recipient } = data;
 
     await Email.sendEmail({
       to: deliveryman.email,
-      subject: `Nova encomenda ${order.name} para ser entregue`,
-      text: 'Você tem uma nova entrega para ser efetuada',
-      template: 'newOrder',
+      subject: `Encomenda ${order.product} cancelada`,
+      text: 'Você tem uma entrega que foi cancelada',
+      template: 'cancelOrder',
       context: {
         deliveryman: deliveryman.name,
         order_id: order.id,
@@ -24,9 +24,10 @@ class NewOrderMail {
         state: recipient.state,
         city: recipient.city,
         cep: recipient.cep,
+        description: deliveryProblem.description,
       },
     });
   }
 }
 
-export default new NewOrderMail();
+export default new CancelOrderMail();

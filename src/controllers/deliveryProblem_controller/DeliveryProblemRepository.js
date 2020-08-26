@@ -32,8 +32,8 @@ class DeliveryProblemRepository extends Error {
     const deliveryProblem = await DeliveryProblem.findByPk(delivery_id);
     const orderId = deliveryProblem.delivery_id;
 
-    const deliveryCancel = await Delivery.cancel(orderId);
-    return deliveryCancel;
+    const orderCancel = await Delivery.cancel(orderId);
+    return { deliveryProblem, orderCancel };
   }
 }
 

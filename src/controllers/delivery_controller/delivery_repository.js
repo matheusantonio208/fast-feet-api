@@ -25,6 +25,12 @@ class DeliveryRepository extends Error {
     throw new Error("Can't list deliveries");
   }
 
+  async listOne(order_id) {
+    const delivery = await Order.findByPk(order_id);
+
+    return delivery;
+  }
+
   async start(order_id, start_date) {
     const order = await Order.findByPk(order_id);
 
@@ -66,7 +72,10 @@ class DeliveryRepository extends Error {
     order.canceled_at = new Date();
     (await order).save();
 
-    return { success_msg: `Order ${order_id} was canceled with success` };
+    return {
+      order_id,
+      success_msg: `Order ${order_id} was canceled with success`,
+    };
   }
 
   checkShippingTime(hour) {

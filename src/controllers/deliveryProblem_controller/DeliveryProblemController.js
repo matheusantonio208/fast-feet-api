@@ -1,4 +1,10 @@
 import DeliveryProblem from './DeliveryProblemRepository';
+import Deliveryman from '../deliveryman_controller/deliveryman_repository';
+import Delivery from '../delivery_controller/delivery_repository';
+import Recipient from '../recipient_controller/recipient_repository';
+
+import Queue from '../../../lib/Queue';
+import CancelOrderMail from '../../jobs/CancelOrderMail';
 
 class DeliveryProblemController {
   async index(req, res) {
@@ -36,9 +42,20 @@ class DeliveryProblemController {
 
   async delete(req, res) {
     try {
-      const delivery = await DeliveryProblem.cancel(req.params.id);
-
-      return res.json(delivery);
+      const isCancel = await DeliveryProblem.cancel(req.params.problem_id);
+      if (isCancel) {
+        const order = await Delivery.listOne(isCancel.orderCancel.order_id);
+        const deliveryman = await Deliveryman.listOne(order.deliveryman_id);
+        const { deliveryProblem } = isCancel;
+        const recipient = await Recipient.listOne(order.recipient_id);
+        await Queue.add(CancelOrderMail.key, {
+          order,
+          deliveryman,
+          deliveryProblem,
+          recipient,
+        });
+      }
+      return res.json(isCancel);
     } catch (error) {
       return res.status(400).json({ error_msg: error.toString() });
     }

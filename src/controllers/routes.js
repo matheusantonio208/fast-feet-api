@@ -34,7 +34,7 @@ class Routes {
     this.routes.get(`${baseRote}/:id/problems`, DeliveryProblem.show);
     this.routes.post(`${baseRote}/:id/problems`, DeliveryProblem.store);
     this.routes.delete(
-      `${baseRote}/problem/:id/cancel-delivery`,
+      `${baseRote}/problem/:problem_id/cancel-delivery`,
       DeliveryProblem.delete,
     );
   }
