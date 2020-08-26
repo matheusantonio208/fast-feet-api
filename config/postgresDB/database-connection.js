@@ -7,8 +7,9 @@ import User from '../../src/models/User';
 import File from '../../src/models/File';
 import Deliveryman from '../../src/models/Deliveryman';
 import Order from '../../src/models/Order';
+import DeliveryProblem from '../../src/models/DeliveryProblem';
 
-const models = [Recipient, User, File, Deliveryman, Order];
+const models = [Recipient, User, File, Deliveryman, Order, DeliveryProblem];
 class DatabaseConnection {
   constructor() {
     this.init();

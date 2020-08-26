@@ -9,6 +9,7 @@ import Recipient from './recipient_controller/recipient_controller';
 import Deliveryman from './deliveryman_controller/deliveryman_controller';
 import Delivery from './delivery_controller/delivery_controller';
 import Order from './order_controller/Order_controller';
+import DeliveryProblem from './deliveryProblem_controller/DeliveryProblemController';
 
 import authService from '../services/auth-service';
 
@@ -21,10 +22,21 @@ class Routes {
     this.recipient('/recipient');
     this.deliveryman('/deliveryman');
     this.order('/order');
+    this.deliveryProblems('/delivery');
   }
 
   session(baseRote) {
     this.routes.post(`${baseRote}`, Session.store);
+  }
+
+  deliveryProblems(baseRote) {
+    this.routes.get(`${baseRote}/problems`, DeliveryProblem.index);
+    this.routes.get(`${baseRote}/:id/problems`, DeliveryProblem.show);
+    this.routes.post(`${baseRote}/:id/problems`, DeliveryProblem.store);
+    this.routes.delete(
+      `${baseRote}/problem/:id/cancel-delivery`,
+      DeliveryProblem.delete,
+    );
   }
 
   recipient(baseRoute) {

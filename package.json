@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon config/server-connection.js",
-    "redis-start": "nodemon config/redis/redis-connection.js",
+    "start-redis": "nodemon config/redisDB/redis-connection.js",
     "dev:debug": "nodemon --inspect config/server-connection.js"
   },
   "dependencies": {
