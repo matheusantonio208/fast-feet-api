@@ -1,4 +1,4 @@
 export default {
-  secret_key: 'f6097a74ca9afb69ad22cf2dbabc968f',
+  secret_key: process.env.AUTH_SECRET_KEY,
   expiresIn: '7d',
 };
