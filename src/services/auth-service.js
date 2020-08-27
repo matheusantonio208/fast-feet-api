@@ -18,6 +18,7 @@ export default async (req, res, next) => {
       authConfig.secret_key,
     );
     req.userId = decodedTokenJson.id;
+    req.userName = decodedTokenJson.name;
 
     return next();
   } catch (error) {

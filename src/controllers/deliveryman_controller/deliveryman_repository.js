@@ -1,10 +1,8 @@
 import Deliveryman from '../../models/Deliveryman';
 
 class DeliverymanRepository extends Error {
-  async create(deliveryman) {
-    const { name, email } = deliveryman;
-
-    if (await Deliveryman.create({ name, email })) {
+  async create({ data }) {
+    if (await Deliveryman.create(data)) {
       return { success_msg: 'Deliveryman created successfully' };
     }
 
@@ -12,25 +10,28 @@ class DeliverymanRepository extends Error {
   }
 
   async listAll() {
-    const deliveryman = await Deliveryman.findAll();
+    const allDeliveryman = await Deliveryman.findAll();
 
-    return deliveryman;
+    if (allDeliveryman) {
+      return allDeliveryman;
+    }
+    throw new Error(`Can't list deliveryman`);
   }
 
   async listOne(id) {
-    const deliveryman = await Deliveryman.findByPk(id);
+    const oneDeliveryman = await Deliveryman.findByPk(id);
 
-    if (deliveryman) {
-      return deliveryman;
+    if (oneDeliveryman) {
+      return oneDeliveryman;
     }
 
-    throw new Error(`There is no saved deliveryman with id ${id}`);
+    throw new Error(`Can't list deliveryman with id ${id}`);
   }
 
-  async update(id, updateDeliveryman) {
-    const deliveryman = await Deliveryman.findByPk(id);
+  async update(id, { data }) {
+    const updatedDeliveryman = await Deliveryman.findByPk(id);
 
-    if (await deliveryman.update(updateDeliveryman)) {
+    if (await updatedDeliveryman.update(data)) {
       return { success_msg: `Deliveryman ${id} updated successfully` };
     }
 

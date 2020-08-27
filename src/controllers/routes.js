@@ -31,10 +31,13 @@ class Routes {
 
   deliveryProblems(baseRote) {
     this.routes.get(`${baseRote}/problems`, DeliveryProblem.index);
-    this.routes.get(`${baseRote}/:id/problems`, DeliveryProblem.show);
-    this.routes.post(`${baseRote}/:id/problems`, DeliveryProblem.store);
+    this.routes.get(
+      `${baseRote}/:deliveryProblem_id/problems`,
+      DeliveryProblem.show,
+    );
+    this.routes.post(`${baseRote}/:order_id/problems`, DeliveryProblem.store);
     this.routes.delete(
-      `${baseRote}/problem/:problem_id/cancel-delivery`,
+      `${baseRote}/problem/:deliveryProblem_id/cancel-delivery`,
       DeliveryProblem.delete,
     );
   }

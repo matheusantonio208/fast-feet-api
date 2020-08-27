@@ -10,7 +10,7 @@ class OrderRepository extends Error {
   async create(order) {
     if (await Order.create(order)) {
       return {
-        success_msg: `Order ${order.product} created successfuly!`,
+        success_msg: `Order ${order.product} created successfully!`,
         name: order.product,
         id: order.id,
       };

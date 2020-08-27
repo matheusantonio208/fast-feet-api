@@ -3,9 +3,9 @@ import Deliveries from './delivery_repository';
 class DeliveryController {
   async index(req, res) {
     try {
-      const deliveries = await Deliveries.listAll(req.params.id);
+      const allDeliveries = await Deliveries.listAll(req.params.id);
 
-      return res.json(deliveries);
+      return res.json(allDeliveries);
     } catch (error) {
       return res.status(400).json({ error_msg: error.toString() });
     }
@@ -13,12 +13,12 @@ class DeliveryController {
 
   async show(req, res) {
     try {
-      const deliveries = await Deliveries.listByStatus(
+      const deliveriesByStatus = await Deliveries.listByStatus(
         req.params.id,
         req.query.status,
       );
 
-      return res.json(deliveries);
+      return res.json(deliveriesByStatus);
     } catch (error) {
       return res.status(400).json({ error_msg: error.toString() });
     }

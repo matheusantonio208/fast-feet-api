@@ -19,7 +19,9 @@ class DeliveryProblemController {
 
   async show(req, res) {
     try {
-      const delivery = await DeliveryProblem.listOne(req.params.id);
+      const delivery = await DeliveryProblem.listOne(
+        req.params.deliveryProblem_id,
+      );
 
       return res.json(delivery);
     } catch (error) {
@@ -30,7 +32,7 @@ class DeliveryProblemController {
   async store(req, res) {
     try {
       const deliveryProblem = await DeliveryProblem.create(
-        req.params.id,
+        req.params.order_id,
         req.body,
       );
 
@@ -42,12 +44,16 @@ class DeliveryProblemController {
 
   async delete(req, res) {
     try {
-      const isCancel = await DeliveryProblem.cancel(req.params.problem_id);
+      const isCancel = await DeliveryProblem.cancel(
+        req.params.deliveryProblem_id,
+      );
+
       if (isCancel) {
-        const order = await Delivery.listOne(isCancel.orderCancel.order_id);
-        const deliveryman = await Deliveryman.listOne(order.deliveryman_id);
         const { deliveryProblem } = isCancel;
+        const order = await Delivery.listOne(isCancel.order_id);
+        const deliveryman = await Deliveryman.listOne(order.deliveryman_id);
         const recipient = await Recipient.listOne(order.recipient_id);
+
         await Queue.add(CancelOrderMail.key, {
           order,
           deliveryman,

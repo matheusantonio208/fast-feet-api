@@ -3,32 +3,32 @@ import Order from '../../models/Order';
 
 class DeliveryRepository extends Error {
   async listAll(deliveryman_id) {
-    const deliveries = await Order.findAll({
+    const allDeliveries = await Order.findAll({
       where: { deliveryman_id, canceled_at: null, end_date: null },
     });
 
-    if (deliveries) {
-      return deliveries;
+    if (allDeliveries) {
+      return allDeliveries;
     }
     throw new Error("Can't list deliveries");
   }
 
   async listByStatus(deliveryman_id, status) {
-    const deliveries = await Order.findAll({
+    const deliveriesByStatus = await Order.findAll({
       where: { deliveryman_id, status },
     });
 
-    if (deliveries) {
-      return deliveries;
+    if (deliveriesByStatus) {
+      return deliveriesByStatus;
     }
 
     throw new Error("Can't list deliveries");
   }
 
   async listOne(order_id) {
-    const delivery = await Order.findByPk(order_id);
+    const oneDelivery = await Order.findByPk(order_id);
 
-    return delivery;
+    return oneDelivery;
   }
 
   async start(order_id, start_date) {
@@ -72,10 +72,7 @@ class DeliveryRepository extends Error {
     order.canceled_at = new Date();
     (await order).save();
 
-    return {
-      order_id,
-      success_msg: `Order ${order_id} was canceled with success`,
-    };
+    return { success_msg: `Order ${order_id} was canceled with success` };
   }
 
   checkShippingTime(hour) {
