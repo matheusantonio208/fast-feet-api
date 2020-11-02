@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import routes from '../src/controllers/routes';
+import cors from 'cors';
 
 import './postgresDB/database-connection';
 
@@ -14,6 +15,7 @@ class App {
 
   middlewares() {
     this.server.use(express.json());
+    this.server.use(cors());
   }
 
   routes() {
