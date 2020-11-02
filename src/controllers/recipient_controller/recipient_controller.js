@@ -1,30 +1,30 @@
-import RecipientRepository from './recipient_repository';
+import Recipient from './recipient_repository';
 
 class RecipientController {
   async index(req, res) {
     try {
-      const recipients = await RecipientRepository.listRecipients();
-      return res.json(recipients);
+      const allRecipients = await Recipient.listAll();
+
+      return res.json(allRecipients);
     } catch (error) {
-      return res.status(400).send(`${error}`);
+      return res.status(400).json({ error_msg: error.toString() });
     }
   }
 
   async show(req, res) {
     try {
-      const recipient = await RecipientRepository.listOneRecipient(
-        req.params.id,
-      );
-      return res.json(recipient);
+      const oneRecipient = await Recipient.listOne(req.params.id);
+
+      return res.json(oneRecipient);
     } catch (error) {
-      return res.status(400).send(`${error}`);
+      return res.status(400).json({ error_msg: error.toString() });
     }
   }
 
   async store(req, res) {
     try {
       const { name, street, number, complement, state, city, cep } = req.body;
-      const newRecipient = await RecipientRepository.createRecipient({
+      const newRecipient = await Recipient.create({
         name,
         street,
         number,
@@ -36,32 +36,36 @@ class RecipientController {
 
       return res.json(newRecipient);
     } catch (error) {
-      return res.status(400).send(`${error}`);
+      return res.status(400).json({ error_msg: error.toString() });
     }
   }
 
   async update(req, res) {
     try {
       const { name, street, number, complement, state, city, cep } = req.body;
-      const updatedRecipient = await RecipientRepository.updateRecipient(
-        req.params.id,
-        { name, street, number, complement, state, city, cep },
-      );
+      const updatedRecipient = await Recipient.update(req.params.id, {
+        name,
+        street,
+        number,
+        complement,
+        state,
+        city,
+        cep,
+      });
+
       return res.json(updatedRecipient);
     } catch (error) {
-      return res.status(400).send(`${error}`);
+      return res.status(400).json({ error_msg: error.toString() });
     }
   }
 
   async delete(req, res) {
     try {
-      const deletedRecipient = await RecipientRepository.deleteRecipient(
-        req.params.id,
-      );
+      const deletedRecipient = await Recipient.delete(req.params.id);
 
       return res.json(deletedRecipient);
     } catch (error) {
-      return res.status(400).send(`${error}`);
+      return res.status(400).json({ error_msg: error.toString() });
     }
   }
 }

@@ -2,7 +2,7 @@ import server from './app';
 
 class Server {
   constructor() {
-    this.start(3333);
+    this.start(process.env.APP_PORT);
   }
 
   start(port) {

@@ -22,7 +22,7 @@ class SessionRepository extends Error {
     return isPassword;
   }
 
-  async checkLoggedUser(isUser, isPassword) {
+  async loginUser(isUser, isPassword) {
     if (isPassword) {
       const { id, name } = isUser;
       const loggedUser = {
